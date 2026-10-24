@@ -3,20 +3,24 @@
     <tr>
       <th scope="col">Title</th>
       <th scope="col">Body</th>
+      <th scope="col">Status</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
     <% @articles.each do |article| %>
-      <tr>
-        <th scope="row"><%= article.title %></th>
-        <td><%= article.body %></td>
-        <td>
-          <%= link_to 'Show Article', article, class: 'btn btn-info' %>
-          <%= link_to 'Edit Article', edit_article_path(article), class: 'btn btn-warning' %>
-          <%= link_to 'Delete Article', article, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-        </td>
-      </tr>
+      <% unless article.archived? %>
+        <tr>
+          <th scope="row"><%= article.title %></th>
+          <td><%= article.body %></td>
+          <td><%= article.status %></td>
+          <td>
+            <%= link_to 'Show Article', article, class: 'btn btn-info' %>
+            <%= link_to 'Edit Article', edit_article_path(article), class: 'btn btn-warning' %>
+            <%= link_to 'Delete Article', article, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

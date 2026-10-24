@@ -1,13 +1,13 @@
 <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
   <div class="card card-body" style="max-width: 600px; width: 100%;">
-    <h1 class="text-center mb-4"><%= @article.new_record? ? "New Article" : "Edit Article" %></h1>
+    <h1 class="text-center mb-4">New Comment</h1>
 
-    <%= form_with(model: article, local: true) do |form| %>
-      <% if article.errors.any? %>
+    <%= form_with model: [ @article, @article.comments.build ] do |form| %>
+      <% if form.object.errors.any? %>
         <div id="error_explanation" class="alert alert-danger">
-          <h4 class="alert-heading"><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h4>
+          <h4 class="alert-heading"><%= pluralize(form.object.errors.count, "error") %> prohibited this comment from being saved:</h4>
           <ul class="mb-0">
-            <% article.errors.full_messages.each do |message| %>
+            <% form.object.errors.full_messages.each do |message| %>
               <li><%= message %></li>
             <% end %>
           </ul>
@@ -16,12 +16,17 @@
 
       <div class="mb-3">
         <%= form.label :title, class: "form-label" %>
-        <%= form.text_field :title, class: "form-control", placeholder: "Enter article title" %>
+        <%= form.text_field :title, class: "form-control", placeholder: "Enter comment title" %>
       </div>
 
       <div class="mb-3">
         <%= form.label :body, class: "form-label" %>
-        <%= form.text_area :body, class: "form-control", rows: 5, placeholder: "Write your article content here..." %>
+        <%= form.text_area :body, class: "form-control", rows: 5, placeholder: "Write your comment here..." %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :status, class: "form-label" %>
+        <%= form.select :status, Visible::VALID_STATUSES, selected: 'public', class: "form-select" %>
       </div>
 
       <div class="text-end">

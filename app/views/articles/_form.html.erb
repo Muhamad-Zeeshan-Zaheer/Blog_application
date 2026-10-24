@@ -23,6 +23,11 @@
         <%= form.text_area :body, class: "form-control", rows: 5, placeholder: "Write your article content here..." %>
       </div>
 
+      <div class="mb-3">
+        <%= form.label :status, class: "form-label" %>
+        <%= form.select :status, Visible::VALID_STATUSES, selected: 'public', class: "form-control" %>
+      </div>
+
       <div class="text-end">
         <%= form.submit class: "btn btn-primary btn-sm" %>
       </div>
